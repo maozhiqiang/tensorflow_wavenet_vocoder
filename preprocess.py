@@ -4,9 +4,9 @@ from multiprocessing import cpu_count
 from tqdm import tqdm
 import importlib
 from hparams import hparams, hparams_debug_string
+from chinese2pinyin import ch2p
 
-
-def preprocess(mod, in_dir, out_root, num_workers):
+def preprocess(mod, in_dir, out_dir, num_workers):
     os.makedirs(out_dir, exist_ok=True)
     metadata = mod.build_from_path(in_dir, out_dir, hparams.silence_threshold, hparams.fft_size, tqdm=tqdm)
     write_metadata(metadata, out_dir)

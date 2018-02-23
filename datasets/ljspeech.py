@@ -5,17 +5,23 @@ import os
 import audio
 
 from nnmnkwii import preprocessing as P
+from chinese2pinyin import ch2p, num2han
+
+special_num = ["01053965700", "360"]
 
 
 def build_from_path(in_dir, out_dir, silence_threshold, fft_size, num_workers=1, tqdm=lambda x: x):
     executor = ProcessPoolExecutor(max_workers=num_workers)
     futures = []
     index = 1
-    with open(os.path.join(in_dir, 'metadata.csv'), encoding='utf-8') as f:
+    with open(os.path.join(in_dir, 'wavs.txt'), encoding='utf-8') as f:
         for line in f:
-            parts = line.strip().split('|')
+            parts = line.strip().split('<------>')
             wav_path = os.path.join(in_dir, 'wavs', '%s.wav' % parts[0])
-            text = parts[2]
+            # text = parts[1]
+            text1 = parts[1]
+            text = ch2p(text1)
+            print("%s.wav: %s ===>%s" % (parts[0], text1, text))
             futures.append(executor.submit(
                 partial(_process_utterance, out_dir, index, wav_path, text, silence_threshold, fft_size)))
             index += 1
