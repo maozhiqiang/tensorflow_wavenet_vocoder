@@ -5,7 +5,7 @@ from tqdm import tqdm
 import importlib
 from hparams import hparams, hparams_debug_string
 from chinese2pinyin import ch2p
-
+from multiprocessing import cpu_count
 def preprocess(mod, in_dir, out_dir, num_workers):
     os.makedirs(out_dir, exist_ok=True)
     metadata = mod.build_from_path(in_dir, out_dir, hparams.silence_threshold, hparams.fft_size, tqdm=tqdm)
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     parser.add_argument('--name', type=str, default=None)
     parser.add_argument('--in_dir', type=str, default=None)
     parser.add_argument('--out_dir', type=str, default=None)
-    parser.add_argument('--num_workers', type=str, default=None)
+    parser.add_argument('--num_workers', type=str, default=cpu_count())
     parser.add_argument('--hparams', type=str, default=None)
     args = parser.parse_args()
 

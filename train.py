@@ -318,8 +318,10 @@ def main():
     train_op = tf.group(optim, variables_averages_op)
 
     # init the sess
+    #tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+    gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
     sess = tf.Session(config=tf.ConfigProto(log_device_placement=False, allow_soft_placement=True,
-                                            gpu_options=tf.GPUOptions(allow_growth=True)))
+                                            gpu_options=gpu_options))#tf.GPUOptions(allow_growth=True)
     init = tf.global_variables_initializer()
     sess.run(init)
 

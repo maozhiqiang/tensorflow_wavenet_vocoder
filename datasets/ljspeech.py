@@ -3,14 +3,14 @@ from functools import partial
 import numpy as np
 import os
 import audio
-
+from multiprocessing import cpu_count
 from nnmnkwii import preprocessing as P
 from chinese2pinyin import ch2p, num2han
 
 special_num = ["01053965700", "360"]
 
 
-def build_from_path(in_dir, out_dir, silence_threshold, fft_size, num_workers=1, tqdm=lambda x: x):
+def build_from_path(in_dir, out_dir, silence_threshold, fft_size, num_workers=cpu_count(), tqdm=lambda x: x):
     executor = ProcessPoolExecutor(max_workers=num_workers)
     futures = []
     index = 1
