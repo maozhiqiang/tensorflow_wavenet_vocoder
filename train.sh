@@ -1,0 +1,1 @@
+python train.py --num_gpus 1 --batch_size 1 --train_txt /media/btows/SDB/train_corpus/wavnet_dataset/train.txt --hparams gc_enable=False,global_channel=0,global_cardinality=0,NPY_DATAROOT=/media/btows/SDB/train_corpus/wavnet_dataset/,sample_rate=22050 --logdir_root log_ljspeech
